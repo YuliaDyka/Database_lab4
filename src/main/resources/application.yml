@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost/db_jdbc_imdb
+    username: user1
+    password: Ir-31013107606
+    driver-class-name: com.mysql.cj.jdbc.Driver
