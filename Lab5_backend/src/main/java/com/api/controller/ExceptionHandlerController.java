@@ -10,24 +10,32 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
+
     @ResponseBody
-    @ExceptionHandler(CityNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    String cityNotFoundHandler(CityNotFoundException ex) {
+    @ExceptionHandler(ActorsAlreadyHasFilmsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    String actorsHasFilmsHandler(ActorsAlreadyHasFilmsException ex) {
         return ex.getMessage();
     }
 
     @ResponseBody
-    @ExceptionHandler(PersonNotFoundException.class)
+    @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String personNotFoundHandler(PersonNotFoundException ex) {
+    String noFoundHandler(EntityNotFoundException ex) {
         return ex.getMessage();
     }
 
     @ResponseBody
-    @ExceptionHandler(BookNotFoundException.class)
+    @ExceptionHandler(FilmsAlreadyHasActorsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    String FilmsHasActorsHandler(FilmsAlreadyHasActorsException ex) {
+        return ex.getMessage();
+    }
+
+    @ResponseBody
+    @ExceptionHandler(DoesNotHaveException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String bookNotFoundHandler(BookNotFoundException ex) {
+    String hasNotContainsHandler(DoesNotHaveException ex) {
         return ex.getMessage();
     }
 
@@ -35,34 +43,6 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
     @ExceptionHandler(LogNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     String logNotFoundHandler(LogNotFoundException ex) {
-        return ex.getMessage();
-    }
-
-    @ResponseBody
-    @ExceptionHandler(PersonHasBookException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    String personHasBookHandler(PersonHasBookException ex) {
-        return ex.getMessage();
-    }
-
-    @ResponseBody
-    @ExceptionHandler(PersonHasNoBookException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    String personHasNoBookHandler(PersonHasNoBookException ex) {
-        return ex.getMessage();
-    }
-
-    @ResponseBody
-    @ExceptionHandler(FreeBookAbsentException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    String freeBookAbsentHandler(FreeBookAbsentException ex) {
-        return ex.getMessage();
-    }
-
-    @ResponseBody
-    @ExceptionHandler(PersonsExistForCityException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    String personsExistForCityHandler(PersonsExistForCityException ex) {
         return ex.getMessage();
     }
 }

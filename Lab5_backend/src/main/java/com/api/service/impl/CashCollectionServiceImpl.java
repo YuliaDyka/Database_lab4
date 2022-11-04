@@ -1,7 +1,7 @@
 package com.api.service.impl;
 
 import com.api.domain.CashCollectionEntity;
-import com.api.exception.NoFoundException;
+import com.api.exception.EntityNotFoundException;
 import com.api.dto.repository.CashCollectionRepository;
 import com.api.service.CashCollectionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class CashCollectionServiceImpl implements CashCollectionService {
     }
 
     public CashCollectionEntity findById(Integer id) {
-        return cashCollectionRepository.findById(id).orElseThrow(() -> new NoFoundException(id, "Cash"));
+        return cashCollectionRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, "Cash"));
     }
 
     @Transactional
@@ -36,7 +36,7 @@ public class CashCollectionServiceImpl implements CashCollectionService {
     @Transactional
     public void update(Integer id, CashCollectionEntity entity) {
         CashCollectionEntity cashCollectionEntity = cashCollectionRepository
-                .findById(id).orElseThrow(() ->  new NoFoundException(id, "Cash"));
+                .findById(id).orElseThrow(() ->  new EntityNotFoundException(id, "Cash"));
 
         cashCollectionEntity.setFilmId(entity.getFilmId());
         cashCollectionEntity.setPrice(entity.getPrice());
@@ -46,7 +46,7 @@ public class CashCollectionServiceImpl implements CashCollectionService {
     @Transactional
     public void delete(Integer id) {
         CashCollectionEntity cashCollectionEntity = cashCollectionRepository
-                .findById(id).orElseThrow(() ->  new NoFoundException(id, "Cash"));
+                .findById(id).orElseThrow(() ->  new EntityNotFoundException(id, "Cash"));
 
         cashCollectionRepository.delete(cashCollectionEntity);
     }

@@ -2,10 +2,10 @@ package com.api.service.impl;
 
 import com.api.domain.ActorsEntity;
 import com.api.domain.FilmsEntity;
-import com.api.exception.ActorsHasFilmsException;
-import com.api.exception.FilmsHasActorsException;
-import com.api.exception.HasNoContainsException;
-import com.api.exception.NoFoundException;
+import com.api.exception.ActorsAlreadyHasFilmsException;
+import com.api.exception.FilmsAlreadyHasActorsException;
+import com.api.exception.DoesNotHaveException;
+import com.api.exception.EntityNotFoundException;
 import com.api.dto.repository.ActorRepository;
 import com.api.dto.repository.FilmRepository;
 import com.api.service.FilmService;
@@ -28,7 +28,7 @@ public class FilmsServiceImpl implements FilmService {
 
 
     public List<ActorsEntity> FindActorByFilmId(Integer id) {
-        FilmsEntity films = filmRepository.findById(id).orElseThrow(() -> new NoFoundException(id, "Films"));
+        FilmsEntity films = filmRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, "Films"));
         return films.getActors().stream().toList();
     }
 
@@ -39,7 +39,7 @@ public class FilmsServiceImpl implements FilmService {
 
     public FilmsEntity findById(Integer id) {
         return  filmRepository
-                .findById(id).orElseThrow(() -> new NoFoundException(id, "Films"));
+                .findById(id).orElseThrow(() -> new EntityNotFoundException(id, "Films"));
     }
 
 
@@ -47,13 +47,13 @@ public class FilmsServiceImpl implements FilmService {
     @Transactional
     public FilmsEntity addActorForFilm(Integer filmId, Integer actorId) {
         ActorsEntity actor = actorRepository.findById(actorId)
-                .orElseThrow(() -> new NoFoundException(actorId, "Actors"));;
+                .orElseThrow(() -> new EntityNotFoundException(actorId, "Actors"));;
 
         FilmsEntity film = filmRepository.findById(filmId)
-                .orElseThrow(() -> new NoFoundException(filmId, "Films"));
+                .orElseThrow(() -> new EntityNotFoundException(filmId, "Films"));
 
-        if (actor.getFilms().contains(film)) throw new ActorsHasFilmsException(actorId, filmId);
-        if (film.getActors().contains(actor)) throw new FilmsHasActorsException(actorId, filmId);
+        if (actor.getFilms().contains(film)) throw new ActorsAlreadyHasFilmsException(actorId, filmId);
+        if (film.getActors().contains(actor)) throw new FilmsAlreadyHasActorsException(actorId, filmId);
 
         film.getActors().add(actor);
         filmRepository.save(film);
@@ -64,11 +64,11 @@ public class FilmsServiceImpl implements FilmService {
     @Transactional
     public FilmsEntity removeActorForFilm(Integer filmId, Integer actorId) {
         ActorsEntity actor = actorRepository.findById(actorId)
-                .orElseThrow(() ->  new NoFoundException(actorId, "Actors"));
+                .orElseThrow(() ->  new EntityNotFoundException(actorId, "Actors"));
 
         FilmsEntity film = filmRepository.findById(filmId)
-                .orElseThrow(() ->  new NoFoundException(filmId, "Films"));
-        if (!film.getActors().contains(actor))throw new HasNoContainsException(actorId, filmId, "Films", "Actors");
+                .orElseThrow(() ->  new EntityNotFoundException(filmId, "Films"));
+        if (!film.getActors().contains(actor))throw new DoesNotHaveException(actorId, filmId, "Films", "Actors");
         actor.getFilms().remove(film);
         actorRepository.save(actor);
         return film;
@@ -76,7 +76,7 @@ public class FilmsServiceImpl implements FilmService {
 
     @Transactional
     public List<FilmsEntity> getFilmsByActorId(Integer actorId) {
-        ActorsEntity actor = actorRepository.findById(actorId).orElseThrow(() -> new NoFoundException(actorId, "Actors"));
+        ActorsEntity actor = actorRepository.findById(actorId).orElseThrow(() -> new EntityNotFoundException(actorId, "Actors"));
         return actor.getFilms().stream().toList();
     }
 
@@ -89,7 +89,7 @@ public class FilmsServiceImpl implements FilmService {
     @Transactional
     public void update(Integer filmId, FilmsEntity updateFilm) {
         FilmsEntity film = filmRepository.findById(filmId)
-                .orElseThrow(() -> new NoFoundException(filmId, "Films"));
+                .orElseThrow(() -> new EntityNotFoundException(filmId, "Films"));
         //update
         film.setActors(updateFilm.getActors());
         film.setName(updateFilm.getName());
@@ -98,14 +98,14 @@ public class FilmsServiceImpl implements FilmService {
 
     @Transactional
     public void delete(Integer id) {
-        FilmsEntity film = filmRepository.findById(id).orElseThrow(() -> new NoFoundException(id, "Films"));
+        FilmsEntity film = filmRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, "Films"));
         filmRepository.delete(film);
     }
 
     @Transactional
     public FilmsEntity create(FilmsEntity film, Integer actorId) {
         ActorsEntity actor = actorRepository.findById(actorId)
-                .orElseThrow(() -> new NoFoundException(actorId, "Actors"));
+                .orElseThrow(() -> new EntityNotFoundException(actorId, "Actors"));
 
         film.setActors((Set<ActorsEntity>) actor);
         filmRepository.save(film);

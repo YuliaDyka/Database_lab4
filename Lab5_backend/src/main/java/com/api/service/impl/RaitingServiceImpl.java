@@ -1,7 +1,7 @@
 package com.api.service.impl;
 
 import com.api.domain.RaitingsEntity;
-import com.api.exception.NoFoundException;
+import com.api.exception.EntityNotFoundException;
 import com.api.dto.repository.RaitingRepository;
 import com.api.service.RaitingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class RaitingServiceImpl implements RaitingService {
     }
 
     public RaitingsEntity findById(Integer id) {
-        return raitingRepository.findById(id).orElseThrow(() -> new NoFoundException(id, "Raitings"));
+        return raitingRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, "Raitings"));
     }
 
     @Transactional
@@ -35,7 +35,7 @@ public class RaitingServiceImpl implements RaitingService {
 
     @Transactional
     public void update(Integer id, RaitingsEntity entity) {
-        RaitingsEntity findRating = raitingRepository.findById(id).orElseThrow(() -> new NoFoundException(id, "Raitings"));
+        RaitingsEntity findRating = raitingRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, "Raitings"));
 
         findRating.setFilmId(entity.getFilmId());
         findRating.setRaiting(entity.getRaiting());
@@ -44,7 +44,7 @@ public class RaitingServiceImpl implements RaitingService {
 
     @Transactional
     public void delete(Integer id) {
-        RaitingsEntity entity = raitingRepository.findById(id).orElseThrow(() -> new NoFoundException(id, "Raitings"));
+        RaitingsEntity entity = raitingRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, "Raitings"));
         raitingRepository.delete(entity);
     }
 }

@@ -1,7 +1,7 @@
 package com.api.service.impl;
 
 import com.api.domain.ReviewersEntity;
-import com.api.exception.NoFoundException;
+import com.api.exception.EntityNotFoundException;
 import com.api.dto.repository.ReviewersRepository;
 import com.api.service.ReviewersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class ReviewersServiceImpl implements ReviewersService {
     }
 
     public ReviewersEntity findById(Integer id) {
-        return reviewersRepository.findById(id).orElseThrow(() -> new NoFoundException(id, "Reviewer"));
+        return reviewersRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, "Reviewer"));
     }
 
     @Transactional
@@ -36,7 +36,7 @@ public class ReviewersServiceImpl implements ReviewersService {
 
     @Transactional
     public void update(Integer id, ReviewersEntity entity) {
-        ReviewersEntity reviewers = reviewersRepository.findById(id).orElseThrow(() -> new NoFoundException(id, "Reviewer"));
+        ReviewersEntity reviewers = reviewersRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, "Reviewer"));
 
         reviewers.setFilmId(entity.getFilmId());
         reviewers.setInfo(entity.getInfo());
@@ -45,7 +45,7 @@ public class ReviewersServiceImpl implements ReviewersService {
 
     @Transactional
     public void delete(Integer id) {
-        ReviewersEntity entity = reviewersRepository.findById(id).orElseThrow(() -> new NoFoundException(id, "Reviewer"));
+        ReviewersEntity entity = reviewersRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, "Reviewer"));
         reviewersRepository.delete(entity);
     }
 }

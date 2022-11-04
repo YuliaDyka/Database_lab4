@@ -1,7 +1,7 @@
 package com.api.service.impl;
 
 import com.api.domain.NominationsEntity;
-import com.api.exception.NoFoundException;
+import com.api.exception.EntityNotFoundException;
 import com.api.dto.repository.NominationRepository;
 import com.api.service.NominationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class NominationServiceImpl implements NominationService {
 
     public NominationsEntity findById(Integer id) {
         return nominationRepository.findById(id)
-                .orElseThrow(() -> new NoFoundException(id, "Nominations"));
+                .orElseThrow(() -> new EntityNotFoundException(id, "Nominations"));
 
     }
 
@@ -38,7 +38,7 @@ public class NominationServiceImpl implements NominationService {
     @Transactional
     public void update(Integer id, NominationsEntity entity) {
         NominationsEntity nominations = nominationRepository.findById(id)
-                .orElseThrow(() -> new NoFoundException(id, "Nominations"));
+                .orElseThrow(() -> new EntityNotFoundException(id, "Nominations"));
         //update
         nominations.setNomination(entity.getNomination());
         nominations.setFilmId(entity.getFilmId());
@@ -48,7 +48,7 @@ public class NominationServiceImpl implements NominationService {
     @Transactional
     public void delete(Integer id) {
         NominationsEntity nominations = nominationRepository.findById(id)
-                .orElseThrow(() -> new NoFoundException(id, "Nominations"));
+                .orElseThrow(() -> new EntityNotFoundException(id, "Nominations"));
         nominationRepository.delete(nominations);
     }
 }

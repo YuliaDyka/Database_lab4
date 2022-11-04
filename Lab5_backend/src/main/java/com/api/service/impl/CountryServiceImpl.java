@@ -1,7 +1,7 @@
 package com.api.service.impl;
 
 import com.api.domain.CountriesEntity;
-import com.api.exception.NoFoundException;
+import com.api.exception.EntityNotFoundException;
 import com.api.dto.repository.CountryRepository;
 import com.api.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class CountryServiceImpl implements CountryService {
 
     public CountriesEntity findById(Integer id) {
         return countryRepository.findById(id)
-                .orElseThrow(() ->new NoFoundException(id, "Countries"));
+                .orElseThrow(() ->new EntityNotFoundException(id, "Countries"));
     }
 
     @Transactional
@@ -37,7 +37,7 @@ public class CountryServiceImpl implements CountryService {
     @Transactional
     public void update(Integer id, CountriesEntity update) {
         CountriesEntity countries = countryRepository.findById(id)
-                .orElseThrow(() -> new NoFoundException(id, "Countries"));
+                .orElseThrow(() -> new EntityNotFoundException(id, "Countries"));
         //update
         countries.setName(update.getName());
         countryRepository.save(countries);
@@ -46,7 +46,7 @@ public class CountryServiceImpl implements CountryService {
     @Transactional
     public void delete(Integer id) {
         CountriesEntity countrie = countryRepository.findById(id)
-                .orElseThrow(() -> new NoFoundException(id, "Countries"));
+                .orElseThrow(() -> new EntityNotFoundException(id, "Countries"));
         countryRepository.delete(countrie);
     }
 }
