@@ -4,6 +4,15 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+@NamedStoredProcedureQuery(
+        name = "addFilmActor",
+        procedureName = "add_film_actor",
+        resultClasses = FilmactorsEntity.class,
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_film_id", type = Integer.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_actor_id", type = Integer.class),
+        })
+
 @Table(name = "filmactors", schema = "db_jdbc_imdb", catalog = "")
 public class FilmactorsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)

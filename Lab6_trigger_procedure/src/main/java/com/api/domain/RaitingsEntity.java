@@ -4,7 +4,11 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "raitings", schema = "db_jdbc_imdb", catalog = "")
+@NamedStoredProcedureQuery(
+        name = "getAvgRating",
+        procedureName = "procedure_avg_raiting",
+        resultClasses = RaitingsEntity.class,
+        parameters = {})
 public class RaitingsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

@@ -17,8 +17,9 @@ public class CountryInfoRepositoryCustomImpl implements CountryInfoRepositoryCus
 
         StoredProcedureQuery newEntity =
                 em.createNamedStoredProcedureQuery("addCountryInfoByProcedure")
-                        .setParameter("in_country_id", countryId).setParameter("in_info", info);
+                        .setParameter("in_country_id", countryId)
+                        .setParameter("in_info", info);
 
-        return (CountryInfo)newEntity.getSingleResult();
+        return (CountryInfo)newEntity.getResultList().get(0);
     }
 }

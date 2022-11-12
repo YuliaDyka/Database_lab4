@@ -42,13 +42,13 @@ public class CountryController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<?> updateBudget(@RequestBody CountriesEntity updateEntity, @PathVariable Integer id) {
+    public ResponseEntity<?> update(@RequestBody CountriesEntity updateEntity, @PathVariable Integer id) {
         countryService.update(id, updateEntity);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<?> deleteBudget(@PathVariable Integer id) {
+    public ResponseEntity<?> delete(@PathVariable Integer id) {
         countryService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -1,6 +1,6 @@
 package com.api.dto.assembler;
 
-import com.api.controller.CountryInfoInfoProcedureController;
+import com.api.controller.CountryInfoProcedureController;
 import com.api.domain.CountryInfo;
 
 import com.api.dto.CountryInfoDto;
@@ -22,7 +22,7 @@ public class CountryInfoAssembler implements RepresentationModelAssembler<Countr
                 .country_id(entity.getCountryId())
                 .build();
 
-        Link selfLink = linkTo(methodOn(CountryInfoInfoProcedureController.class).getById(dto.getId())).withSelfRel();
+        Link selfLink = linkTo(methodOn(CountryInfoProcedureController.class).getById(dto.getId())).withSelfRel();
         dto.add(selfLink);
         return dto;
     }

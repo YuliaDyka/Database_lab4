@@ -11,11 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping(value = "/api/country_info_procedure")
-public class CountryInfoInfoProcedureController {
+public class CountryInfoProcedureController {
 
     @Autowired
     CountryInfoProcedureService countryInfoProcedureService;

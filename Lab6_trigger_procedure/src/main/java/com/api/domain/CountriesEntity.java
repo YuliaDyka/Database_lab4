@@ -4,7 +4,14 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "countries", schema = "db_jdbc_imdb", catalog = "")
+@NamedStoredProcedureQuery(
+        name = "addValuesToCountry",
+        procedureName = "add_values_to_country",
+        resultClasses = CountriesEntity.class,
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_start_num", type = Integer.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_count", type = Integer.class),
+        })
 public class CountriesEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
