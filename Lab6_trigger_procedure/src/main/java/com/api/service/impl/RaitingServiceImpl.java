@@ -83,4 +83,16 @@ public class RaitingServiceImpl implements RaitingService {
             }
         }
     }
+
+    @Transactional
+    public double getAvgRating() {
+        return raitingRepository.getAvgRating();
+    }
+
+    @Transactional
+    public void CreateRatingWithCursor() {
+        raitingRepository.CreateRatingWithCursor();
+    }
+
+
 }

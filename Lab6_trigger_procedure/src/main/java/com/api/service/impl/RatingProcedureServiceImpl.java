@@ -19,7 +19,7 @@ public class RatingProcedureServiceImpl implements RatingProcedureService {
     @Autowired
     RaitingRepository raitingRepository;
     @Override
-    public Float getAvgRating() {
+    public double getAvgRating() {
         try {
             System.out.println("----TRY get avg rating FUNCTION  BY PROCEDURE -------");
             var result = raitingRepository.getAvgRating();
@@ -32,7 +32,7 @@ public class RatingProcedureServiceImpl implements RatingProcedureService {
                 throw new DataBaseException(gex.getSQLException().getMessage());
             }
         }
-        return null;
+        return 0;
     }
 // ---------------------------------------------------------------------------
 

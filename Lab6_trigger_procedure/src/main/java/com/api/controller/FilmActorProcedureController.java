@@ -1,8 +1,6 @@
 package com.api.controller;
 
-import com.api.domain.CountryInfo;
 import com.api.domain.FilmactorsEntity;
-import com.api.dto.CountryInfoDto;
 import com.api.dto.FilmActorDto;
 import com.api.dto.assembler.FilmActorAssembler;
 import com.api.service.FilmActorProcedureService;

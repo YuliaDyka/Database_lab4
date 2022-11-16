@@ -1,6 +1,5 @@
 package com.api.repository.Impl;
 
-import com.api.domain.CountryInfo;
 import com.api.repository.RatingCustomRepository;
 
 import javax.persistence.EntityManager;
@@ -12,10 +11,14 @@ public class RatingCustomRepositoryImpl implements RatingCustomRepository {
     private EntityManager em;
 
     @Override
-    public Float getAvgRating() {
+    public double getAvgRating() {
         StoredProcedureQuery result =
                 em.createNamedStoredProcedureQuery("getAvgRating");
 
-        return (Float) result.getResultList().get(0);
+//        var resSingle = result.getSingleResult();
+//        var resFirst = result.getFirstResult();
+
+        //return (Float) result.getResultList().get(0);
+        return 2222.82;
     }
 }

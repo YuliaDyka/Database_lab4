@@ -52,4 +52,18 @@ public class RaitingController {
         raitingService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping(value = "/get_avg_procedure_function")
+    public ResponseEntity<Double> getAvg() {
+        var avg = raitingService.getAvgRating();
+
+        return new ResponseEntity(avg, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/cursor")
+    public ResponseEntity<Integer> createRatingWithCursor() {
+        raitingService.CreateRatingWithCursor();
+
+        return new ResponseEntity(1, HttpStatus.OK);
+    }
 }

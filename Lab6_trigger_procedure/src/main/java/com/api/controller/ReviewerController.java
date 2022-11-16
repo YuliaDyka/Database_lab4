@@ -3,12 +3,13 @@ package com.api.controller;
 import com.api.domain.ReviewersEntity;
 import com.api.dto.ReviewerDto;
 import com.api.dto.assembler.ReviewerAssembler;
-import com.api.service.ReviewersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.api.service.ReviewersService;
 
 import java.util.List;
 

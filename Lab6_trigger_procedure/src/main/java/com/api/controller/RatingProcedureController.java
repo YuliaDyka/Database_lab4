@@ -21,7 +21,7 @@ public class RatingProcedureController {
     private RaitingAssembler raitingAssembler;
 
     @GetMapping(value = "/getAvg")
-    public float getAvgRating() {
+    public double getAvgRating() {
 
         var result = ratingProcedureService
                 .getAvgRating();

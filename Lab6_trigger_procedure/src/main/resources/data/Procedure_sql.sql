@@ -69,8 +69,10 @@ DELIMITER ;
 
 DROP FUNCTION IF EXISTS raiting_avg;
 DELIMITER //
-CREATE FUNCTION raiting_avg()
-    RETURNS DECIMAL(12,4) DETERMINISTIC
+CREATE FUNCTION raiting_avg() RETURNS FLOAT
+READS SQL DATA
+    -- RETURNS DECIMAL(12,4) DETERMINISTIC
+    
 BEGIN
 RETURN (SELECT AVG(raiting) FROM raitings);
 END//
@@ -84,4 +86,44 @@ SELECT raiting_avg();
 END//
 DELIMITER ;
 
-CALL procedure_avg_raiting();
+-- CALL procedure_avg_raiting();
+
+
+-- CURSOR
+DROP PROCEDURE IF EXISTS create_rating_with_cursor;
+DELIMITER //
+CREATE PROCEDURE create_rating_with_cursor()
+BEGIN
+    DECLARE done BOOL DEFAULT false;
+    DECLARE copy_raiting INT;
+    DECLARE column_count INT;
+    DECLARE my_cursor CURSOR FOR SELECT raiting FROM `raitings`;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = true;
+    OPEN my_cursor;
+    general_loop: LOOP
+        FETCH my_cursor INTO copy_raiting;
+        IF (done = true) THEN LEAVE general_loop;
+        END IF;
+        SET column_count = FLOOR( 1 + RAND( ) * 9);
+        SET @table_name = CONCAT('raiting_', copy_raiting, '_');
+        SET @my_query = CONCAT('CREATE TABLE ', @table_name, CURRENT_TIMESTAMP() + 1, ' (');
+        
+        add_columns_loop: LOOP
+			IF column_count < 0 THEN LEAVE add_columns_loop;
+            END IF;
+            
+            SET @my_query = CONCAT(@my_query, ' column', column_count,' int ');
+			IF column_count!=0 THEN SET @my_query=concat(@my_query,',');
+			end if;    
+			SET column_count=column_count - 1;
+        END LOOP add_columns_loop;
+        SET @my_query = CONCAT(@my_query, ')');
+        PREPARE create_query FROM @my_query;
+        EXECUTE create_query;
+        DEALLOCATE PREPARE create_query;
+    END LOOP general_loop;
+    CLOSE my_cursor;
+END //
+DELIMITER ;
+
+-- CALL create_rating_with_cursor();
