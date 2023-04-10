@@ -6,7 +6,7 @@ DROP TRIGGER IF EXISTS canNotHaveLastZerroTriggerRaitings;
 DELIMITER //
 CREATE TRIGGER canNotHaveLastZerroTriggerRaitings
     BEFORE INSERT
-    ON raitings
+    ON raitings_entity
     FOR EACH ROW
 BEGIN
     SET @rait = CONVERT(NEW.raiting, CHAR(50));
@@ -23,7 +23,7 @@ DROP TRIGGER IF EXISTS canNotUpdateTriggerRaitings;
 DELIMITER //
 CREATE TRIGGER canNotUpdateTriggerRaitings
     BEFORE UPDATE
-    ON raitings
+    ON raitings_entity
     FOR EACH ROW
 BEGIN
     SET @message = CONCAT('You cannot modify table "raitings"');
@@ -37,7 +37,7 @@ DROP TRIGGER IF EXISTS canNotDeleteRowTriggerRaitings;
 DELIMITER //
 CREATE TRIGGER canNotDeleteRowTriggerRaitings
     BEFORE DELETE
-    ON raitings
+    ON raitings_entity
     FOR EACH ROW
 BEGIN
     SET @message = CONCAT('You cannot delete row from "raitings"');

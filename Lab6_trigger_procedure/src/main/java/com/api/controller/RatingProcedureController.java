@@ -15,17 +15,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/api/rating_procedure")
 public class RatingProcedureController {
 
-    @Autowired
-    RatingProcedureService ratingProcedureService;
-    @Autowired
-    private RaitingAssembler raitingAssembler;
-
-    @GetMapping(value = "/getAvg")
-    public double getAvgRating() {
-
-        var result = ratingProcedureService
-                .getAvgRating();
-
-        return result;
-    }
+//    @Autowired
+//    RatingProcedureService ratingProcedureService;
+//    @Autowired
+//    private RaitingAssembler raitingAssembler;
+//
+//    @GetMapping(value = "/getAvg")
+//    public double getAvgRating() {
+//
+//        var result = ratingProcedureService
+//                .getAvgRating();
+//
+//        return result;
+//    }
 }

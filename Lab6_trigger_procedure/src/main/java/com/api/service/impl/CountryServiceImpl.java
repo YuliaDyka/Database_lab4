@@ -39,7 +39,7 @@ public class CountryServiceImpl implements CountryService {
                 .orElseThrow(() -> new EntityNotFoundException(id, "Countries"));
 
         try {
-            System.out.println("----TRY Update country -------");
+            System.out.println("----TRY Update country BY TRIGGER-------");
             countries.setName(update.getName());
             countryRepository.save(countries);
             countryRepository.flush();
@@ -56,7 +56,7 @@ public class CountryServiceImpl implements CountryService {
         CountriesEntity country = countryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(id, "Countries"));
         try {
-            System.out.println("----TRY DELETE-------");
+            System.out.println("----TRY DELETE BY TRIGGER-------");
             countryRepository.delete(country);
             countryRepository.flush();
         } catch (JpaSystemException ex) {

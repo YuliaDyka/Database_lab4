@@ -20,7 +20,7 @@ CREATE TRIGGER insertTriggerCountryInfo
 BEGIN
     IF NOT EXISTS (SELECT * FROM countries WHERE id = NEW.country_id)
 		THEN
-        SET @message = CONCAT('Cannot insert info because country ID:', NEW.country_id, ' does exist');
+        SET @message = CONCAT('TRIGGER - Cannot insert info because country ID:', NEW.country_id, ' does not exist');
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = @message;
 END IF;
 END //
@@ -36,7 +36,7 @@ CREATE TRIGGER updateTriggerCountryInfo
 BEGIN
     IF NOT EXISTS (SELECT * FROM countries WHERE id = NEW.country_id)
 		THEN
-        SET @message = CONCAT('Cannot update info because country ID:', NEW.country_id, ' does exist');
+        SET @message = CONCAT('TRIGGER - Cannot update info because country ID:', NEW.country_id, ' does not exist');
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = @message;
 END IF;
 END //
@@ -52,7 +52,7 @@ CREATE TRIGGER deleteTriggerCountry
 BEGIN
     IF EXISTS (SELECT * FROM country_info WHERE country_id = OLD.id)
 		THEN
-        SET @message = CONCAT('Cannot delete country with ID:', OLD.id, ' because it is used in: "country_info"');
+        SET @message = CONCAT('TRIGGER - Cannot delete country with ID:', OLD.id, ' because it is used in: "country_info"');
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = @message;
 END IF;
 END //
@@ -69,7 +69,7 @@ CREATE TRIGGER updateTriggerCountry
 BEGIN
     IF EXISTS (SELECT * FROM country_info WHERE country_id = OLD.id)
 		THEN
-        SET @message = CONCAT('Cannot update country with ID:', OLD.id, ' because it is used in: "country_info"');
+        SET @message = CONCAT('TRIGGER - Cannot update country _inwith ID:', OLD.id, ' because it is used in: "country_info"');
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = @message;
 END IF;
 END //

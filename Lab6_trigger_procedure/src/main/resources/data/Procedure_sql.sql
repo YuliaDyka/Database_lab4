@@ -71,8 +71,7 @@ DROP FUNCTION IF EXISTS raiting_avg;
 DELIMITER //
 CREATE FUNCTION raiting_avg() RETURNS FLOAT
 READS SQL DATA
-    -- RETURNS DECIMAL(12,4) DETERMINISTIC
-    
+  
 BEGIN
 RETURN (SELECT AVG(raiting) FROM raitings);
 END//
@@ -88,6 +87,9 @@ DELIMITER ;
 
 -- CALL procedure_avg_raiting();
 
+-- Використовуючи курсор, забезпечити динамічне створення таблиць з назвами+штамп часу, 
+-- взятими зі стовпця з довільної таблиці БД, з випадковою кількістю стовпців
+ -- (від 1 до 9). Імена та тип стовпців довільні.
 
 -- CURSOR
 DROP PROCEDURE IF EXISTS create_rating_with_cursor;
