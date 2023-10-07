@@ -1,0 +1,53 @@
+package com.api.domain;
+
+import javax.persistence.*;
+import java.util.Objects;
+
+@Entity
+@NamedStoredProcedureQuery(
+        name = "addValuesToCountry",
+        procedureName = "add_values_to_country",
+        resultClasses = CountriesEntity.class,
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_start_num", type = Integer.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_count", type = Integer.class),
+        })
+public class CountriesEntity {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(name = "id")
+    private Integer id;
+    @Basic
+    @Column(name = "name")
+    private String name;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CountriesEntity that = (CountriesEntity) o;
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
+}
+
